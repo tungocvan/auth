@@ -4,7 +4,8 @@
 namespace modules\Auth\src\Http\Controllers\Auth;
 
 use Hash;
-use App\Models\User;
+//use App\Models\User;
+use Modules\Auth\src\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;

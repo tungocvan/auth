@@ -11,6 +11,7 @@ class ModuleServiceProvider extends ServiceProvider
     }
     private $middlewares = [
         // add middleware
+        'posts.middleware' => \Modules\Posts\src\Http\Middlewares\Posts::class,
         'auth.middleware' => \Modules\Auth\src\Http\Middlewares\Auth::class,    
         'admin.middleware' => \Modules\Admin\src\Http\Middlewares\Admin::class,        
     ];

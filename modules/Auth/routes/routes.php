@@ -2,11 +2,12 @@
 
  use Modules\Auth\src\Http\Controllers\Auth\LoginController;
  use Modules\Auth\src\Http\Controllers\Auth\RegisterController;
- use Illuminate\Support\Facades\Route;
- use Modules\Auth\src\Http\Controllers\AuthController;
+ use Illuminate\Support\Facades\Route; 
  use Laravel\Socialite\Facades\Socialite;
 
- Auth::routes();
+ Auth::routes([
+  "register" => true
+ ]);
  Route::middleware(['web'])->prefix('/')->group(function(){
       Route::middleware(['auth.middleware','auth'])->get('/home', function()
       {
