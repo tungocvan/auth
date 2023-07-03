@@ -52,22 +52,19 @@ class LoginController extends Controller
     
     public function googleCallback()
     {
-        $userGoogle = Socialite::driver('google')->user();
-        
-        $providerId = $userGoogle->getId();
-        $provider = 'google';
-        $user = User::where('provider', $provider)
-            ->where('provider_id', $providerId)
-            ->first();
-        if (!$user) {
+        $userGoogle = Socialite::driver('google')->user();        
+        $user  = User::where('email', $userGoogle->getEmail())->first();
+        if(!$user){                     
             $user = new User();
             $user->name = $userGoogle->getName();
             $user->email = $userGoogle->getEmail();
-            $user->provider_id = $providerId;
-            $user->provider = $provider;
+            $user->provider_id = $userGoogle->getId();
+            $user->provider = 'google';
             $user->password = Hash::make(rand());
-            $user->save();
+            $user->group_id = 1;
+            $user->save();            
         }
+
         $userId = $user->id;
         //dd($userGoogle);
         Auth::loginUsingId($userId);
@@ -77,19 +74,16 @@ class LoginController extends Controller
     public function facebookCallback()
     {
         $userFacebook = Socialite::driver('facebook')->user();
-        //dd($user);
-        $providerId = $userFacebook->getId();
-        $provider = 'facebook';
-        $user = User::where('provider', $provider)
-            ->where('provider_id', $providerId)
-            ->first();
-        if (!$user) {
+        $user  = User::where('email', $userFacebook->getEmail())->first();
+        //dd($user);            
+        if (!$user) {            
             $user = new User();
             $user->name = $userFacebook->getName();
             $user->email = $userFacebook->getEmail();
-            $user->provider_id = $providerId;
-            $user->provider = $provider;
+            $user->provider_id = $userFacebook->getId();
+            $user->provider = 'facebook';
             $user->password = Hash::make(rand());
+            $user->group_id = 1;
             $user->save();
         }
         $userId = $user->id;

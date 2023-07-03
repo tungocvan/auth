@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password',100); 
             $table->string('provider_id')->nullable();
             $table->string('provider')->nullable();
-            $table->integer('group_id')->unsigned()->default(0);
+            $table->integer('group_id')->unsigned()->default(1);
             $table->integer('user_id')->unsigned()->default(0);
             $table->integer('status')->unsigned()->default(0);
             $table->rememberToken();

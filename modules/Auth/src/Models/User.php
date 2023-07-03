@@ -3,11 +3,12 @@
 //namespace App\Models;
 namespace modules\Auth\src\Models;
 
+use Laravel\Sanctum\HasApiTokens;
+use Modules\Groups\src\Models\Groups;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -23,7 +24,8 @@ class User extends Authenticatable
         'email',
         'password',
         'provider_id',
-        'provider'
+        'provider',
+        'group_id'
     ];
 
     /**
@@ -44,8 +46,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    protected $primaryKey = 'id';
-    public $timestamps = true;
-    const CREATED_AT ='created_at';
-    const UPDATED_AT ='updated_at';
+    // protected $primaryKey = 'id';
+    // public $timestamps = true;
+    // const CREATED_AT ='created_at';
+    // const UPDATED_AT ='updated_at';
+    public function group(){
+        return $this->belongsTo(Groups::class);
+    }
 }
