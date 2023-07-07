@@ -50,5 +50,23 @@ class DatabaseSeeder extends Seeder
         
        }
 
+       DB::table('modules')->insert([
+        'name' => 'users',
+        'title' => "Quản lý người dùng",                 
+        'created_at' =>date('Y-m-d H:i:s'),
+        'updated_at' =>date('Y-m-d H:i:s')
+        ]);
+       DB::table('modules')->insert([
+        'name' => 'groups',
+        'title' => "Quản lý nhóm",                 
+        'created_at' =>date('Y-m-d H:i:s'),
+        'updated_at' =>date('Y-m-d H:i:s')
+        ]);
+       DB::table('modules')->insert([
+        'name' => 'posts',
+        'title' => "Quản lý bài viết",                 
+        'created_at' =>date('Y-m-d H:i:s'),
+        'updated_at' =>date('Y-m-d H:i:s')
+        ]);
     }
 }

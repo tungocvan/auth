@@ -127,4 +127,9 @@ function ExceltoArrayUploadBackup($file)
 //         }
 //     }
 
+function assetPath($type='')
+{
+    return  asset('phoenix/assets/'.$type); 
+}
+
 ?>

@@ -20,8 +20,11 @@ class GroupsController extends Controller
     }
     public function index()
     {
-        $lists = User::all();                
-        return view('Groups::groups',compact('lists'));
+        
+        $title = "Danh sách nhóm";
+        $active = 'groups';
+        $uri = 'list';        
+        return view('Groups::groups',compact('title','active','uri'));
     }
 
     /**
@@ -31,7 +34,10 @@ class GroupsController extends Controller
      */
     public function create()
     {
-        return view('Groups::groups');
+        $title = "Thêm nhóm mới";
+        $active = 'create';
+        $uri = 'add';        
+        return view('Groups::groups',compact('title','active','uri'));
     }
 
     /**

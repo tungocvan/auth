@@ -11,6 +11,9 @@ class ModuleServiceProvider extends ServiceProvider
     }
     private $middlewares = [
         // add middleware
+        'users.middleware' => \Modules\Users\src\Http\Middlewares\Users::class,
+        'dashboard.middleware' => \Modules\Dashboard\src\Http\Middlewares\Dashboard::class,
+        'modules.middleware' => \Modules\Modules\src\Http\Middlewares\Modules::class,
         'groups.middleware' => \Modules\Groups\src\Http\Middlewares\Groups::class,
         'posts.middleware' => \Modules\Posts\src\Http\Middlewares\Posts::class,
         'auth.middleware' => \Modules\Auth\src\Http\Middlewares\Auth::class,    
