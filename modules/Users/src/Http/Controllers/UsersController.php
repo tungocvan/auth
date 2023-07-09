@@ -5,6 +5,7 @@ namespace modules\Users\src\Http\Controllers;
 use Illuminate\Http\Request;
 use Modules\Users\src\Models\Users;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Modules\Users\Repositories\UsersRepositoryInterface;
 
 class UsersController extends Controller
@@ -86,7 +87,35 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        return view('Users::users');
+        
+        $request->validate(
+            [
+                'name' => 'required|min:2',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:6|confirmed',                
+            ],
+            [
+                'name.min' => 'username ít nhất :min ký tự',
+                'name.required' => 'username buộc phải nhập',
+                'email.required' => 'email buộc phải nhập',
+                'email.email' => 'Email không hợp lệ',
+                'email.unique' => 'Email đã tồn tại',
+                'password.required' => 'Mật khẩu bắt buộc phải nhập',
+                'password.min' => 'Mật khẩu ít nhất :min ký tự',         
+            ]
+        );
+        
+        $user = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'group_id' => $request->group,
+            'user_id' => $this->usersRepo->getUserCurrent()->id, 
+        ];
+        //dd($user);
+        $this->usersRepo->create($user);
+        return back()->with('msg','Cập nhật thành công');
+        //return view('Users::users');
     }
 
     /**
@@ -108,8 +137,12 @@ class UsersController extends Controller
      */
     public function edit(Users $user)
     {
-        dd($user);
-        return view('Users::users');
+        //dd($user);
+        $title = "Sửathành viên";
+        $active = 'edit';
+        $uri = 'edit'; 
+        
+        return view('Users::users',compact('title','active','uri','user'));
     }
 
     /**
@@ -119,9 +152,37 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        return view('Users::users');
+        $request->validate(
+            [
+                'name' => 'required|min:2',
+                'email' => 'required|email',
+                'password' => 'required|min:6|confirmed',                
+            ],
+            [
+                'name.min' => 'username ít nhất :min ký tự',
+                'name.required' => 'username buộc phải nhập',
+                'email.required' => 'email buộc phải nhập',
+                'email.email' => 'Email không hợp lệ',
+                'email.unique' => 'Email đã tồn tại',
+                'password.required' => 'Mật khẩu bắt buộc phải nhập',
+                'password.min' => 'Mật khẩu ít nhất :min ký tự',         
+            ]
+        );
+        
+        $user = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'group_id' => $request->group,
+            'user_id' => $this->usersRepo->getUserCurrent()->id, 
+        ];
+        $id = $request->id;
+        $this->usersRepo->update($id,$user);
+        return back()->with('msg','Cập nhật thành công');
+        //dd($request);
+        //return view('Users::users');
     }
 
     /**
@@ -132,7 +193,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        echo $id;
-        return view('Users::users');
+        $this->usersRepo->delete($id);
+        return back()->with('msg','Xóa thành công');
     }
 }

@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
        DB::statement('SET FOREIGN_KEY_CHECKS=0');
         $groupId= DB::table('groups')->insertGetId([
-            'name' => 'Administrator',
+            'name' => 'Administrator', 
             'user_id' => 0,
             'created_at' =>date('Y-m-d H:i:s'),
             'updated_at' =>date('Y-m-d H:i:s')

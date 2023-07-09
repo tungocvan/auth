@@ -1,6 +1,8 @@
-
+@if (session('msg'))
+    <div class="alert alert-outline-success">{{session('msg')}}</div>
+  @endif 
 <form class="row g-3 card shadow-none border border-300 my-4" method="GET">
-
+  
 <table class="table">
     <thead>
        <tr>             
@@ -58,7 +60,7 @@
       @if ($users->count() > 0)
           @foreach ($users as $item)
           <tr>
-            <td scope="row"><input style="margin-left: 0.5rem" class="form-check-input" type="checkbox" /></td>
+            <td scope="row"><input style="margin-left: 0.5rem" class="form-check-input" type="checkbox" /> {{$item->id}}</td>
             <td>{{$item->name}}</td>
             <td>{{$item->email}}</td>
             <td>{{$item->status}}</td>
