@@ -1,8 +1,21 @@
 .footer-border-right{
     border-right: #ccc 1px solid;
+    
 }
-
+ 
 .user-avatar-l{
     display: flex;
     align-items:center;
 }
+
+table th a{
+    color: inherit;
+    text-decoration: none;
+}
+
+@media screen and (min-width: 900px) {
+    main .content {
+        margin-right:  0 !important;
+    }    
+ }
+

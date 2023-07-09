@@ -20,16 +20,49 @@ class UsersController extends Controller
        $this->middleware("auth");
        $this->usersRepo = $usersRepo;
     }
-    public function index()
+    public function index(Request $request)
     {
         $title = "Danh sách thành viên";
         $active = 'users';
-        $uri = 'list';        
+        $uri = 'list';       
+        $filters = [];
+        $limit = 5;
+        $status = $request->input('status') ?? -1;
+        $groupId = $request->input('group') ?? -1;
+        $keyword = $request->input('keyword') ?? '';                
+        if($status != -1){
+            $filters[] = [
+                'users.status','=',$status
+            ];
+        }
+        if($groupId != -1){
+            $filters[] = [
+                'users.group_id','=',$groupId
+            ];
+        }
+        if(!empty($keyword)){
+            $filters[] = [
+                'users.name', 'like', '%'.$keyword.'%'
+            ];            
+        }
+        //dd(getGroupAll());
         //$users = $this->usersRepo->getAll();
-         $users = $this->usersRepo->getAllUsers();
+         $users = $this->usersRepo->getAllUsers($limit,$filters,$keyword);
+         //dd($users); //currentPage , total, path
         //$users = $this->usersRepo->getUserCurrent();
         //dd($users);
-        return view('Users::users',compact('title','active','uri','users'));
+        
+        $sortBy = $request->input('sortBy');       
+        $sortType = $request->input('sortType') ?? "asc";  
+        if( $sortType == "asc") {
+            $sortIcon = "fas fa-angle-up";
+            $sortType = "desc";
+        }else{
+            $sortIcon = "fas fa-angle-down";
+            $sortType = "asc";
+        }
+        
+        return view('Users::users',compact('title','active','uri','users','sortIcon','sortType'));
     }
 
     /**

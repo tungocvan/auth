@@ -1,9 +1,10 @@
 <?php
-use App\Models\Doctors;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\ProductsImport;
-use App\Imports\ThuocImport;
 use App\Models\Thuoc;
+use App\Models\Doctors;
+use App\Imports\ThuocImport;
+use App\Imports\ProductsImport;
+use Maatwebsite\Excel\Facades\Excel;
+use Modules\Groups\src\Models\Groups;
 function isDoctorActive($email)
 {
     $count = Doctors::where('email', $email)
@@ -132,4 +133,8 @@ function assetPath($type='')
     return  asset('phoenix/assets/'.$type); 
 }
 
+function getGroupAll()
+{
+    return Groups::all();
+}
 ?>

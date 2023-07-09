@@ -8,6 +8,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
         
         main.classList.toggle('navbar-vertical-collapsed')
         footerRight.classList.toggle('footer-border-right')
+        let content = document.querySelector('main .content');
+        if(footerRight.classList.contains("footer-border-right")){           
+            content.style.marginLeft='50px';
+        }else{
+            content.style.marginLeft= '15.875rem';
+        }
         
     })
     navLinkLabel.forEach((item) => {
