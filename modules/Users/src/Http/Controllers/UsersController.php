@@ -23,6 +23,9 @@ class UsersController extends Controller
     }
     public function index(Request $request)
     {
+        if($request->deleteAll =='submit'){            
+            $this->deleteAll($request->chkUsers);
+        }
         $title = "Danh sách thành viên";
         $active = 'users';
         $uri = 'list';       
@@ -48,7 +51,7 @@ class UsersController extends Controller
         }
         //dd(getGroupAll());
         //$users = $this->usersRepo->getAll();
-         $users = $this->usersRepo->getAllUsers($limit,$filters,$keyword);
+         
          //dd($users); //currentPage , total, path
         //$users = $this->usersRepo->getUserCurrent();
         //dd($users);
@@ -62,7 +65,8 @@ class UsersController extends Controller
             $sortIcon = "fas fa-angle-down";
             $sortType = "asc";
         }
-        
+
+        $users = $this->usersRepo->getAllUsers($limit,$filters,$keyword,$sortBy,$sortType);
         return view('Users::users',compact('title','active','uri','users','sortIcon','sortType'));
     }
 
@@ -180,7 +184,8 @@ class UsersController extends Controller
         ];
         $id = $request->id;
         $this->usersRepo->update($id,$user);
-        return back()->with('msg','Cập nhật thành công');
+        //return back()->with('msg','Cập nhật thành công');
+        return redirect()->route('admin.users.index')->with('msg', "Cập nhật thành công $request->email");
         //dd($request);
         //return view('Users::users');
     }
@@ -194,6 +199,13 @@ class UsersController extends Controller
     public function destroy($id)
     {
         $this->usersRepo->delete($id);
+        return back()->with('msg','Xóa thành công');
+    }
+    public function deleteAll($users)
+    {
+        foreach($users as $userId){
+            $this->usersRepo->delete($userId);
+        }    
         return back()->with('msg','Xóa thành công');
     }
 }

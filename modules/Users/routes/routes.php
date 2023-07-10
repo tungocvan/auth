@@ -8,5 +8,6 @@
      Route::get('/edit/{user}', [UsersController::class, 'edit'])->name('edit');
      Route::post('/update', [UsersController::class, 'update'])->name('update');
      Route::get('/delete/{id}', [UsersController::class, 'destroy'])->name('delete');
+     Route::post('/delete-all', [UsersController::class, 'deleteAll'])->name('delete-all');
  });
 
