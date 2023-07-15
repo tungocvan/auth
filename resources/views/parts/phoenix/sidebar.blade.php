@@ -6,7 +6,8 @@
             <ul class="navbar-nav flex-column" id="navbarVerticalNav">
                 @include("Dashboard::menu")
                 @include("Users::menu")
-                @include("Modules::menu")
+                @include("Groups::menu") 
+                @include("Posts::menu") 
             </ul>
         </div>
     </div>

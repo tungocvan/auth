@@ -74,7 +74,7 @@ class UsersController extends Controller
     public function create()
     {
         $title = "Thêm mới thành viên";
-        $active = 'create';
+        $active = 'users.create';
         $uri = 'add';        
         return view('Users::users',compact('title','active','uri'));
     }
@@ -139,7 +139,7 @@ class UsersController extends Controller
     {
         //dd($user);
         $title = "Sửathành viên";
-        $active = 'edit';
+        $active = 'users.edit';
         $uri = 'edit'; 
         
         return view('Users::users',compact('title','active','uri','user'));

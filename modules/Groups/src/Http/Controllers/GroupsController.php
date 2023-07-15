@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Modules\Auth\src\Models\User;
 use App\Http\Controllers\Controller;
 use Modules\Groups\src\Models\Groups;
+use Modules\Modules\src\Models\Modules;
 
 class GroupsController extends Controller
 {
@@ -23,8 +24,9 @@ class GroupsController extends Controller
         
         $title = "Danh sách nhóm";
         $active = 'groups';
-        $uri = 'list';        
-        return view('Groups::groups',compact('title','active','uri'));
+        $uri = 'list';  
+        $groups = Groups::all();
+        return view('Groups::groups',compact('title','active','uri','groups'));
     }
 
     /**
@@ -35,7 +37,7 @@ class GroupsController extends Controller
     public function create()
     {
         $title = "Thêm nhóm mới";
-        $active = 'create';
+        $active = 'groups.create';
         $uri = 'add';        
         return view('Groups::groups',compact('title','active','uri'));
     }
@@ -95,4 +97,43 @@ class GroupsController extends Controller
     {
         return view('Groups::groups');
     }
+
+    public function permission(Groups $group)
+    {
+       
+        $title = "Phân quyền nhóm";
+        $active = 'groups.permission';
+        $uri = 'permission';          
+        $modules = Modules::all();
+        //dd($modules);
+        $roleListArr = [
+            "view" => "Xem",
+            "add" => "Thêm",
+            "edit" => "Sửa",
+            "delete" => "Xóa"
+        ];
+        $roleJson = $group->permissions;
+        if(!empty($roleJson)){
+            $roleArr= json_decode($roleJson,true);
+        }else{
+            $roleArr= [];
+        }
+        return view('Groups::groups',compact('title','active','uri','group','modules','roleListArr','roleArr'));
+    }
+    public function postPermission(Groups $group, Request $request)
+    {
+       
+        if(!empty($request->role)){
+            $roleArr = $request->role;
+        }else{
+            $roleArr = [];
+        }
+        $roleJson = json_encode($roleArr);        
+        $group->permissions =  $roleJson ;
+        $group->save();
+        return back()->with('msg','Phân quyền thành công !');
+        
+    }
 }
+   
+

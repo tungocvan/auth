@@ -29,11 +29,11 @@
             </div>
         </a>
         <div class="parent-wrapper label-1">
-            <ul class="nav parent collapse show" data-bs-parent="#navbarVerticalCollapse" id="home"
+            <ul class="nav parent collapse {{$active === 'users' || $active === 'users.create' || $active === 'users.edit'?'show' : ''}}" data-bs-parent="#navbarVerticalCollapse" id="home"
                 style="">
                 <li class="collapsed-nav-item-title d-none">Quản lí thành viên</li>
                 <li class="nav-item">
-                    <a class="nav-link {{$active === 'users'?'active' : ''}} " href="{{route('admin.users.index')}}" data-bs-toggle=""
+                    <a class="nav-link {{$active === 'users' || $active === 'users.edit'  ?'active' : ''}} " href="{{route('admin.users.index')}}" data-bs-toggle=""
                         aria-expanded="false">
                         <div class="d-flex align-items-center"><span class="nav-link-text">Danh sách
                                 thành viên</span></div>
@@ -41,7 +41,7 @@
                     <!-- more inner pages-->
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{$active === 'create'?'active' : ''}}" href="{{route('admin.users.add')}}" data-bs-toggle=""
+                    <a class="nav-link {{$active === 'users.create'?'active' : ''}}" href="{{route('admin.users.add')}}" data-bs-toggle=""
                         aria-expanded="false">
                         <div class="d-flex align-items-center"><span class="nav-link-text">Tạo mới thành
                                 viên</span></div>

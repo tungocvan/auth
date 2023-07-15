@@ -19,4 +19,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
     navLinkLabel.forEach((item) => {
         item.style.paddingLeft = 0;
     })
+
+    
 });
+// let active = document.querySelector('.active');
+//     console.log('active:',active)
+//     active.classList.remove('active');

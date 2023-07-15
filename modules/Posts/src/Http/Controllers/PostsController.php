@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Modules\Posts\src\Models\Posts;
 
+
 class PostsController extends Controller
 {
     /**
@@ -17,10 +18,15 @@ class PostsController extends Controller
     {
        //$this->middleware("auth");
     }
-    public function index()
+    public function index(Request $request)
     {
-        return 'post lists';
-        //return view('Posts::posts');
+        //dd($request->user()->id);
+        $title = "Danh sách bài viết";
+        $active = 'posts';
+        $uri = 'list';     
+        $posts = Posts::where('user_id','=',$request->user()->id)->get();
+        return view('Posts::posts',compact('title','active','uri','posts'));
+        //return view('Posts::posts'); 
     }
 
     /**
@@ -30,8 +36,10 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return 'post create';
-        //return view('Posts::posts');
+        $title = "Thêm bài viết";
+        $active = 'posts.create';
+        $uri = 'add';        
+        return view('Posts::posts',compact('title','active','uri'));
     }
 
     /**
@@ -64,7 +72,10 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        return 'edit lists';
+        $title = "Sửa bài viết";
+        $active = 'posts.edit';
+        $uri = 'edit';        
+        return view('Posts::posts',compact('title','active','uri'));
         //return view('Posts::posts');
     }
 
@@ -88,6 +99,7 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
+        dd($id);
         return view('Posts::posts');
     }
 }

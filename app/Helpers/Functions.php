@@ -5,6 +5,7 @@ use App\Imports\ThuocImport;
 use App\Imports\ProductsImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Groups\src\Models\Groups;
+
 function isDoctorActive($email)
 {
     $count = Doctors::where('email', $email)
@@ -137,4 +138,26 @@ function getGroupAll()
 {
     return Groups::all();
 }
-?>
+
+function isRole($dataArr,$moduleName,$role='view')
+{
+    if(!empty($dataArr[$moduleName])){
+        $roleArr = $dataArr[$moduleName];
+        if(!empty($roleArr) && in_array($role,$roleArr)){
+            return true;
+        }
+    }
+    return false;
+}
+
+function checkPermissions($user,$moduleName,$role)
+{
+    $roleJson = $user->group->permissions;
+        if(!empty($roleJson)){
+            $roleArr = json_decode($roleJson,true);
+            $check = isRole($roleArr,$moduleName,$role);
+            return $check;
+        }
+        
+    return false;
+}
