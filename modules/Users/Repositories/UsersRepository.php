@@ -12,9 +12,14 @@ class UsersRepository extends BaseRepository implements UsersRepositoryInterface
     {
         return User::class;
     }
-    public function getAllUsers($limit = 5, $filters = [],$keyword='')
+    public function getAllUsers($limit = 5, $filters = [],$keyword='',$sortBy=null,$sortType=null)
     {
-        $users = $this->model->paginate($limit);
+        if($sortBy){
+            $users = $this->model->orderBy($sortBy,$sortType)->paginate($limit); 
+        }else{
+            $users = $this->model->paginate($limit);
+        }
+        
         //dd($users);
         if(!empty($filters)){
             //dd($filters);

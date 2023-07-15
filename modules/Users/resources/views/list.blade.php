@@ -10,8 +10,8 @@
             <th colspan="4">
                 <a class="btn btn-phoenix-success btn-sm" href="{{route('admin.users.add')}}">
                     <svg class="svg-inline--fa fa-plus" data-fa-transform="shrink-3 down-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="" style="transform-origin: 0.4375em 0.625em;"><g transform="translate(224 256)"><g transform="translate(0, 64)  scale(0.8125, 0.8125)  rotate(0 0 0)"><path fill="currentColor" d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z" transform="translate(-224 -256)"></path></g></g></svg><span class="ms-1">Thêm mới</span></a>
-                <a class="btn btn-phoenix-success btn-sm" href="#">
-                    <svg class="svg-inline--fa fa-plus" data-fa-transform="shrink-3 down-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="" style="transform-origin: 0.4375em 0.625em;"><g transform="translate(224 256)"><g transform="translate(0, 64)  scale(0.8125, 0.8125)  rotate(0 0 0)"><path fill="currentColor" d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z" transform="translate(-224 -256)"></path></g></g></svg><span class="ms-1">Xóa chọn</span></a>
+                <button class="btn btn-phoenix-success btn-sm" type="submit" name="deleteAll" value='submit'>
+                    <svg class="svg-inline--fa fa-plus" data-fa-transform="shrink-3 down-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="" style="transform-origin: 0.4375em 0.625em;"><g transform="translate(224 256)"><g transform="translate(0, 64)  scale(0.8125, 0.8125)  rotate(0 0 0)"><path fill="currentColor" d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z" transform="translate(-224 -256)"></path></g></g></svg><span class="ms-1">Xóa chọn</span></button>
             </th>  
        </tr>  
        <tr>
@@ -50,9 +50,9 @@
             <div class="form-check mb-0 fs-0"><input class="form-check-input" type="checkbox" /></div>
         </th>
         <th scope="col"><a href="?sortBy=name&sortType={{$sortType}}">Name<span class="{{$sortIcon}}"></span></a></th>
-        <th scope="col">Email</th>
-        <th scope="col">status</th>
-        <th scope="col">Group</th>
+        <th scope="col"><a href="?sortBy=name&sortType={{$sortType}}">Email<span class="{{$sortIcon}}"></span></a></th>
+        <th scope="col"><a href="?sortBy=name&sortType={{$sortType}}">Status<span class="{{$sortIcon}}"></span></a></th>
+        <th scope="col"><a href="?sortBy=name&sortType={{$sortType}}">Group<span class="{{$sortIcon}}"></span></a></th>
         <th scope="col" colspan="2">Action</th>
       </tr>
     </thead>
@@ -60,7 +60,7 @@
       @if ($users->count() > 0)
           @foreach ($users as $item)
           <tr>
-            <td scope="row"><input style="margin-left: 0.5rem" class="form-check-input" type="checkbox" /> {{$item->id}}</td>
+            <td scope="row"><input name="chkUsers[]" style="margin-left: 0.5rem" class="form-check-input" type="checkbox" value="{{$item->id}}" /> {{$item->id}}</td>
             <td>{{$item->name}}</td>
             <td>{{$item->email}}</td>
             <td>{{$item->status}}</td>
