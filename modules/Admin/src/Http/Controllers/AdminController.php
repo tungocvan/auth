@@ -87,4 +87,5 @@ class AdminController extends Controller
     {
         return view('Admin::admin');
     }
+  
 }

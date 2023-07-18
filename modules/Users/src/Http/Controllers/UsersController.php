@@ -198,6 +198,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
+        
         $this->usersRepo->delete($id);
         return back()->with('msg','Xóa thành công');
     }

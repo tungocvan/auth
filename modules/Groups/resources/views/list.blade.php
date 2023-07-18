@@ -21,7 +21,13 @@
         <td>
           <div class="row">
               <div class="col-3">
-                <a href="{{route('admin.groups.permission',$item)}}">Phân quyền</a>
+                @can('permission',Modules\Groups\src\Models\Groups::class)
+                    <a href="{{route('admin.groups.permission',$item)}}">Phân quyền</a>                 
+                @endcan              
+                @cannot('permission',Modules\Groups\src\Models\Groups::class)
+                   <button disabled>Phân quyền</button>
+                @endcannot
+                
               </div>
               <div class="col-2"><a href="{{route('admin.groups.edit',$item)}}">Sửa</a></div>
               <div class="col-2"><a href="{{route('admin.groups.delete',$item->id)}}">Xóa</a></div>

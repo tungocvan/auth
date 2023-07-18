@@ -16,7 +16,7 @@ class Users
      */
     public function handle(Request $request, Closure $next)
     {
-        echo 'middleware Users' ;
+        
         return $next($request);
     }
 }

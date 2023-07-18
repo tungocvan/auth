@@ -3,11 +3,18 @@
     <div class="navbar-collapse collapse" id="navbarVerticalCollapse">
         <!-- scrollbar removed-->
         <div class="navbar-vertical-content">
-            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
-                @include("Dashboard::menu")
-                @include("Users::menu")
-                @include("Groups::menu") 
-                @include("Posts::menu") 
+            <ul class="navbar-nav flex-column" id="navbarVerticalNav">                
+                @include("Dashboard::menu")    
+                @can('view', Modules\Auth\src\Models\User::class)            
+                    @include("Users::menu")                
+                @endcan
+                @can('viewAny', Modules\Groups\src\Models\Groups::class) 
+                     @include("Groups::menu")   
+                @endcan
+                @can('viewAny', Modules\Posts\src\Models\Posts::class)
+                    @include("Posts::menu") 
+                @endcan              
+                
             </ul>
         </div>
     </div>

@@ -1,4 +1,7 @@
-<div class="nav-item-wrapper"><a class="nav-link  label-1 {{$active === 'dashboard'?'active' : ''}}"
+@php
+    $active = $active ?? '' ;
+@endphp
+<div class="nav-item-wrapper"><a class="nav-link  label-1 {{ $active  === 'dashboard'?'active' : ''}}"
     href="{{route('admin.dashboard.index')}}" role="button" data-bs-toggle=""
     aria-expanded="false">
     <div class="d-flex align-items-center"><span class="nav-link-icon"><svg

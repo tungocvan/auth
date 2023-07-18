@@ -1,3 +1,6 @@
+@php
+    $active = $active ?? '' ;
+@endphp
 <li class="nav-item">   
    
     <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1 collapsed"

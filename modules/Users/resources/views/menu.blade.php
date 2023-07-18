@@ -1,4 +1,7 @@
-<li class="nav-item">
+@php
+    $active = $active ?? '' ;
+@endphp
+<li class="nav-item"> 
     <p class="navbar-vertical-label">QUẢN LÍ HỆ THỐNG</p>
     <hr class="navbar-vertical-line">
     <!-- parent pages-->
