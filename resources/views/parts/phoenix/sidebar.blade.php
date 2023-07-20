@@ -13,9 +13,14 @@
                 @endcan
                 @can('viewAny', Modules\Posts\src\Models\Posts::class)
                     @include("Posts::menu") 
-                @endcan              
-                
-            </ul>
+                @endcan 
+				@can('view', Modules\Website\src\Models\Website::class)
+					@include('Website::menu')
+				@endcan
+				@can('view', Modules\Banhang\src\Models\Banhang::class)
+					@include('Banhang::menu')
+				@endcan
+			</ul>
         </div>
     </div>
     <div class="navbar-vertical-footer">

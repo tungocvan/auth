@@ -3,7 +3,10 @@
 namespace App\Console\Commands;
 use File;
 use Illuminate\Console\Command;
+
 use Illuminate\Support\Facades\Artisan;
+use Modules\Modules\src\Models\Modules;
+
 class Module extends Command
 {
     /**
@@ -153,6 +156,20 @@ class Module extends Command
                 $viewFile = $viewsFolder . '/' . $viewName . '.blade.php';
                 $content = "<h3>{$name} Module</h3>";
                 File::put($viewFile, $content);
+            }
+
+            $moduleName = [
+                'name' => strtolower($name),
+                'title' => "Quản lý module $name",                 
+                'created_at' =>date('Y-m-d H:i:s'),
+                'updated_at' =>date('Y-m-d H:i:s')
+            ];
+
+            $module = Modules::firstOrNew(['name' => $moduleName['name']]);
+            if (!$module->exists) {
+                // Nếu không tìm thấy bản ghi, set dữ liệu và lưu vào cơ sở dữ liệu
+                $module->fill($moduleName);
+                $module->save();
             }
 
             $this->info('Module tạo thành công');

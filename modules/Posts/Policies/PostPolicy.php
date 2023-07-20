@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Policies;
+namespace Modules\Posts\Policies; 
 
 use Modules\Auth\src\Models\User;
 use Modules\Posts\src\Models\Posts;

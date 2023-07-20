@@ -6,12 +6,12 @@
 @can('createPost', Modules\Posts\src\Models\Posts::class)
     <div class="row">
         <div class="col-2">
-            <button>Thêm bài viết</button>
+            <a class="btn btn-primary" href="{{route('admin.posts.add')}}">Thêm bài viết</a>
         </div>
     </div>
 @endcan
 <table class="table">
-    <thead>
+    <thead> 
       <tr>             
            <th>ID</th>
            <th>Title</th>

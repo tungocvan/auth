@@ -1,16 +1,16 @@
 <?php
 
-namespace modules\Modules\src\Models;
+namespace modules\Banhang\src\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Modules extends Model
+class Banhang extends Model
 {
     use HasFactory;
-    protected $table = "modules";
+   //protected $table = "";
    //protected $primaryKey = "id";
-   protected $fillable = ['name','title'];
+   //protected $fillable = [];
    //protected $timestamps = true;
    //const CREATED_AT ="created_at";
    //const UPDATED_AT ="updated_at";

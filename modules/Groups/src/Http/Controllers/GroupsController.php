@@ -72,7 +72,10 @@ class GroupsController extends Controller
      */
     public function edit($id)
     {
-        return view('Groups::groups');
+        $title = "Sửa nhóm mới";
+        $active = 'groups.edit';
+        $uri = 'edit';        
+        return view('Groups::groups',compact('title','active','uri'));
     }
 
     /**

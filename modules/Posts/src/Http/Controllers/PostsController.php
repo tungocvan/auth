@@ -20,11 +20,16 @@ class PostsController extends Controller
     }
     public function index(Request $request)
     {
-        //dd($request->user()->id);
+        //dd($request->user()->group->name);
         $title = "Danh sách bài viết";
         $active = 'posts';
-        $uri = 'list';     
-        $posts = Posts::where('user_id','=',$request->user()->id)->get();
+        $uri = 'list';  
+        if($request->user()->group->name == 'Administrator'){
+            $posts = Posts::all();
+        }else{
+            $posts = Posts::where('user_id','=',$request->user()->id)->get();
+        }
+        
         return view('Posts::posts',compact('title','active','uri','posts'));
         //return view('Posts::posts'); 
     }

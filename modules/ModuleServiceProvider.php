@@ -11,6 +11,8 @@ class ModuleServiceProvider extends ServiceProvider
     }
     private $middlewares = [
         // add middleware
+        'banhang.middleware' => \Modules\Banhang\src\Http\Middlewares\Banhang::class,
+        'website.middleware' => \Modules\Website\src\Http\Middlewares\Website::class,
         'users.middleware' => \Modules\Users\src\Http\Middlewares\Users::class,
         'dashboard.middleware' => \Modules\Dashboard\src\Http\Middlewares\Dashboard::class,
         'modules.middleware' => \Modules\Modules\src\Http\Middlewares\Modules::class,
