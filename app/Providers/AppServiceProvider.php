@@ -1,6 +1,11 @@
 <?php
 
 namespace App\Providers;
+use App\View\Components\Input;
+use App\View\Components\Editor;
+use App\View\Components\CardText;
+
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -31,6 +36,9 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
+        Blade::component('package-input', Input::class);
+        Blade::component('package-editor', Editor::class);
+        Blade::component('package-card-text', CardText::class);                    
         Paginator::useBootstrap();
     }
 }

@@ -23,7 +23,12 @@ class DashboardController extends Controller
         $title = "Trang chủ";
         $active = 'dashboard';
         $uri = 'list';
-        return view('Dashboard::dashboard',compact('title','active','uri'));
+        $inputUsername = ['type' => 'text','title' =>'Họ và tên', 'name' => 'username'];
+        $inputEmail = ['type' => 'email','title' =>'Địa chỉ email', 'name' => 'email'];
+        $inputDate = ['type' => 'date', 'name' => 'startDay'];
+        $inputSelect = ['type' => 'select', 'name' => 'slWork','select' => [['value' => '1','title' => 'Honda'],['value' => '12','title' => 'Toyota'],],'multiple' => false];
+        $inputFile = ['type' => 'file', 'name' => 'fileAnh'];
+        return view('Dashboard::dashboard',compact('title','active','uri','inputUsername','inputEmail','inputDate','inputSelect','inputFile'));
     }
 
     /**

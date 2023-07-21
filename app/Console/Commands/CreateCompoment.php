@@ -23,7 +23,7 @@ class CreateCompoment extends Command
 
     /**
      * Create a new command instance.
-     *
+     * 
      * @return void
      */
     public function __construct()
@@ -55,22 +55,32 @@ class CreateCompoment extends Command
         if($myoption == false){
             Artisan::call('make:component', ['name' => $nameComp]);            
             $content = file_get_contents($servicePath);
-            
+            $blade = "use Illuminate\Support\Facades\Blade;";
+            $position = strpos($content, $blade);
+            if($position == false){
+                $newContent.="\n".$blade;
+            }
             $content = str_replace('namespace App\Providers;',"namespace App\Providers;\n". $newContent, $content);
             file_put_contents($servicePath, $content);
             $content = file_get_contents($servicePath);
-            $newContent="        Blade::component('$packageComp', $nameComp::class);";
+            $newContent="        Blade::component('package-$packageComp', $nameComp::class);";
             $content = str_replace('Schema::defaultStringLength(191);',"Schema::defaultStringLength(191);\n". $newContent, $content);
             file_put_contents($servicePath, $content);
+            $viewComp=base_path('resources/views/components/' . $packageComp . '.blade.php');
+            if (File::exists($viewComp)) {                
+                $newContent="<h3>$packageComp</h3>";
+                File::put($viewComp, $newContent);
+            }
+            $comp = "<x-package-$packageComp />";
+            $this->info("Đã tạo thàng công component, cách sử dụng trong blade: $comp");
         }else{
             if (File::exists($compFile)) {
                 //dd($compFile);
-                $content = file_get_contents($servicePath);
-              
+                $content = file_get_contents($servicePath);              
                 $content = str_replace($newContent,'', $content);
                 file_put_contents($servicePath, $content);
                 $content = file_get_contents($servicePath);
-                $newContent="Blade::component('$packageComp', $nameComp::class);";
+                $newContent="Blade::component('package-$packageComp', $nameComp::class);";
                 $content = str_replace($newContent,'', $content);
                 file_put_contents($servicePath, $content);
                 // xóa file
@@ -79,6 +89,7 @@ class CreateCompoment extends Command
                 if (File::exists($viewComp)) {
                     File::delete($viewComp);
                 }
+                $this->info("Đã xóa thàng công component $packageComp");
             }
         }
         

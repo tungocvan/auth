@@ -7,7 +7,8 @@
             href="#icons" role="button" data-bs-toggle="collapse" aria-expanded="false"
             aria-controls="icons">
             <div class="d-flex align-items-center">
-                <div class="dropdown-indicator-icon"><svg class="svg-inline--fa fa-caret-right"
+                <div class="dropdown-indicator-icon">
+                    <svg class="svg-inline--fa fa-caret-right"
                         aria-hidden="true" focusable="false" data-prefix="fas"
                         data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 256 512" data-fa-i2svg="">
@@ -16,7 +17,9 @@
                         </path>
                     </svg>
                     <!-- <span class="fas fa-caret-right"></span> Font Awesome fontawesome.com -->
-                </div><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg"
+                </div>
+                <span class="nav-link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg"
                         width="16px" height="16px" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" class="feather feather-grid">
@@ -24,7 +27,9 @@
                         <rect x="14" y="3" width="7" height="7"></rect>
                         <rect x="14" y="14" width="7" height="7"></rect>
                         <rect x="3" y="14" width="7" height="7"></rect>
-                    </svg></span><span class="nav-link-text">Quản lý nhóm</span>
+                    </svg>
+                </span>
+                <span class="nav-link-text">Quản lý nhóm</span>
             </div>
         </a>
         <div class="parent-wrapper label-1">

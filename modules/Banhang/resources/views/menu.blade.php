@@ -24,23 +24,23 @@
                         <rect x="14" y="3" width="7" height="7"></rect>
                         <rect x="14" y="14" width="7" height="7"></rect>
                         <rect x="3" y="14" width="7" height="7"></rect>
-                    </svg></span><span class="nav-link-text">Quản lý banhang</span>
+                    </svg></span><span class="nav-link-text">Quản lý Bán hàng</span>
             </div>
         </a>
         <div class="parent-wrapper label-1">
             <ul class="nav parent collapse {{$active === 'banhang' || $active === 'banhang.create'?'show' : ''}}" data-bs-parent="#navbarVerticalCollapse" id="banhang-id"
                 style="">
-                <li class="collapsed-nav-item-title d-none">Quản lý banhang</li>
+                <li class="collapsed-nav-item-title d-none">Quản lý Bán hàng</li>
                 <li class="nav-item"><a class="nav-link {{$active === 'banhang'?'active' : ''}}" href="{{route('admin.banhang.index')}}"
                         data-bs-toggle="" aria-expanded="false">
                         <div class="d-flex align-items-center"><span
-                                class="nav-link-text">Danh sách banhang</span></div>
+                                class="nav-link-text">Danh sách Bán hàng</span></div>
                     </a><!-- more inner pages--> 
                 </li>
                 <li class="nav-item"><a class="nav-link {{$active === 'banhang.create'?'active' : ''}}" href="{{route('admin.banhang.add')}}"
                         data-bs-toggle="" aria-expanded="false">
                         <div class="d-flex align-items-center"><span
-                                class="nav-link-text">Thêm banhang</span></div>
+                                class="nav-link-text">Thêm Bán hàng</span></div>
                     </a><!-- more inner pages-->
                 </li>
               

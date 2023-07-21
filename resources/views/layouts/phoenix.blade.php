@@ -33,7 +33,7 @@
               @show             
               @section('modal')                  
               @show              
-        @yield('js')
+        @yield('js')        
     </body>
 </html>
   
