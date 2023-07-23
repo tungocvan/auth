@@ -1,10 +1,12 @@
+@guest
+@else
 <nav class="navbar navbar-top navbar-expand">
   <!-- navbar top content goes here-->
   <div class="collapse navbar-collapse justify-content-between">
       <!-- Logo -->
     <div class="navbar-logo">
       <button class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
-      <a class="navbar-brand me-1 me-sm-3" href="../../index.html">
+      <a class="navbar-brand me-1 me-sm-3" href="{{route('admin.dashboard.index')}}">
         <div class="d-flex align-items-center">
           <div class="d-flex align-items-center"><img src="{{$myAsset}}/img/icons/logo.png" alt="phoenix" width="27">
             <p class="logo-text ms-2 d-none d-sm-block">HAMADA</p>
@@ -118,7 +120,7 @@
               <div class="avatar avatar-xl ">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user text-700" style="height:20px;width:20px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
               </div>
-              <h6 class="mt-2 text-black">name</h6>
+              <h6 class="mt-2 text-black">{{ Auth::user()->name }}</h6>
             </div>
             <div class="mb-3 mx-3"><input class="form-control form-control-sm" id="statusUpdateInput" type="text" placeholder="Update your status"></div>
           </div>
@@ -152,3 +154,4 @@
     </ul>
   </div>
 </nav>
+@endguest
