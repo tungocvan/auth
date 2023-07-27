@@ -74,8 +74,28 @@
                 <option {{ $item['value'] ==  $selected?'selected':'' }} value="{{$item['value']}}">{{$item['title']}}</option>
               @endforeach
             </select>
-            @break       
-            @default
+            @break     
+        @case('choices')   
+            @php
+                $choicesArray =$options['select'] ?? [['value' => '1','label' => 'One'],['value' => '2','label' => 'Two']];              
+                
+            @endphp
+            @if ($title !=='')
+                 <label class="form-label" for="{{ $name }}">{{ $title }}</label>
+            @endif            
+            <select class="form-select js-choice" id="{{ $name }}" name="{{ $name }}[]" data-choices="data-choices" multiple="multiple" >
+                @foreach ($choicesArray as $item)
+                        <option value="{{$item['value']}}">{{$item['label']}}</option>
+                @endforeach
+            </select>
+            <script>
+                const element = document.querySelector('.js-choice');
+                const choices = new Choices(element,{
+                    removeItemButton: true, 
+                });
+            </script>
+        @break
+        @default
             @if ($title !=='')
                  <label class="form-label" for="{{ $name }}">{{ $title }}</label>
             @endif            

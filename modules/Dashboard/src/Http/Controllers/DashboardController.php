@@ -26,9 +26,74 @@ class DashboardController extends Controller
         $inputUsername = ['type' => 'text','title' =>'Họ và tên', 'name' => 'username'];
         $inputEmail = ['type' => 'email','title' =>'Địa chỉ email', 'name' => 'email'];
         $inputDate = ['type' => 'date', 'name' => 'startDay'];
-        $inputSelect = ['type' => 'select', 'name' => 'slWork','select' => [['value' => '1','title' => 'Honda'],['value' => '12','title' => 'Toyota'],],'multiple' => false];
+        $inputSelect = ['type' => 'select', 'name' => 'slWork','select' => [['value' => '1','title' => 'Honda'],['value' => '12','title' => 'Toyota'],],'multiple' => true];
         $inputFile = ['type' => 'file', 'name' => 'fileAnh'];
-        return view('Dashboard::dashboard',compact('title','active','uri','inputUsername','inputEmail','inputDate','inputSelect','inputFile'));
+        $inputChoices = ['type' => 'choices', 'name' => 'choices','select' => [['value' => '1','label' => 'Honda'],['value' => '12','label' => 'Toyota']]];
+        
+        $menuItems = array(
+            array(
+                'name' => 'Home',
+                'url' => 'index.php',
+                'id' => 1,
+                'parent' => null
+            ),
+            array(
+                'name' => 'About',
+                'url' => 'about.php',
+                'id' => 2,
+                'parent' => null
+            ),
+            array(
+                'name' => 'Products',
+                'url' => 'products.php',
+                'id' => 3,
+                'parent' => null
+            ),
+            array(
+                'name' => 'Contact Us',
+                'url' => 'contact.php',
+                'id' => 4,
+                'parent' => null
+            ),
+            array(
+                'name' => 'Category 1',
+                'url' => 'category1.php',
+                'id' => 5,
+                'parent' => 3
+            ),
+            array(
+                'name' => 'Category 2',
+                'url' => 'category2.php',
+                'id' => 6,
+                'parent' => 3
+            ),
+            array(
+                'name' => 'Subcategory 1',
+                'url' => 'subcategory1.php',
+                'id' => 7,
+                'parent' => 5
+            ),
+            array(
+                'name' => 'Subcategory 2',
+                'url' => 'subcategory2.php',
+                'id' => 8,
+                'parent' => 5
+            ),
+            array(
+                'name' => 'Category 1',
+                'url' => 'category1.php',
+                'id' => 9,
+                'parent' => 2
+            ),
+            array(
+                'name' => 'Category 2',
+                'url' => 'category2.php',
+                'id' => 10,
+                'parent' => 2
+            ),
+        );
+        
+        return view('Dashboard::dashboard',compact('title','active','uri','inputUsername','inputEmail','inputDate','inputSelect','inputFile','menuItems','inputChoices'));
     }
 
     /**

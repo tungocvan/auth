@@ -161,3 +161,35 @@ function checkPermissions($user,$moduleName,$role)
         
     return false;
 }
+function getCategories($categories, $parentId = 0, $char = '',$inputName = 'category')
+{   
+
+    //menu:  @php echo getCategories($menuItems); @endphp 
+    //category:  @php echo getCategories($menuItems,0,'','category'); @endphp 
+    if ($categories) {        
+        if($inputName !== null) {
+            $inputName = '<input type="checkbox" name='. $inputName.'[] /> ';
+        }
+        foreach ($categories as $key => $category) {
+            if ($category['parent'] == $parentId) {
+                echo "<p>" . $char . $inputName .$category['name'] . "</p>";
+                unset($categories[$key]);
+                getCategories($categories, $category['id'], $char . "ㅤㅤ");
+            }
+        }
+    }
+}
+function getCategoriesOptions($categories, $parentId = 0, $char = '')
+{
+    if ($categories) {       
+        foreach ($categories as $key => $category) {
+            if ($category['parent'] == $parentId) {
+                echo '<option value=' . $category['id'] . '>' . $char . $category['name']. '</option>';
+                unset($categories[$key]);
+                getCategoriesOptions($categories, $category['id'], $char . "ㅤㅤ");
+            }
+        }
+    }
+}
+
+    
