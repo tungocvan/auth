@@ -6,3 +6,5 @@ curl -H'Authorization: cpanel nhathhmd:U6I9SPUH8E94ONFITAKETDYAOXSAYAED' 'https:
 echo "hoàn thành cài đặt"
 echo "Lưu ý setup database và cài đặt table user"
 echo "php artisan migrate:fresh"
+echo "Quá trình cài đặt nếu xảy ra lỗi vui lòng chạy lại:"
+echo "composer update"
