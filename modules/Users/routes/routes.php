@@ -9,6 +9,7 @@
      Route::get('/add', [UsersController::class, 'create'])->name('add')->can('create',User::class); 
      Route::get('/edit/{user}', [UsersController::class, 'edit'])->name('edit')->can('edit',User::class);
      Route::post('/update', [UsersController::class, 'update'])->name('update');
+     Route::post('/update-info', [UsersController::class, 'updateInfo'])->name('update-info');
      Route::get('/delete/{id}', [UsersController::class, 'destroy'])->name('delete')->can('delete',User::class);
      Route::post('/delete-all', [UsersController::class, 'deleteAll'])->name('delete-all');
  });

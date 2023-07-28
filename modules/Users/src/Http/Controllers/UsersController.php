@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Modules\Users\src\Models\Users;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Modules\Users\src\Models\UserMeta;
 use Modules\Users\Repositories\UsersRepositoryInterface;
 
 class UsersController extends Controller
@@ -183,7 +184,15 @@ class UsersController extends Controller
         $inputPassword= ['type' => 'password','title' =>'Mật khẩu', 'name' => 'password', 'value' => $user->password];
         $inputPassword_confirmation= ['type' => 'password','title' =>'Nhập lại Mật khẩu', 'name' => 'password_confirmation', 'value' => $user->password];
         $inputSelect = ['type' => 'select', 'name' => 'slWork','select' => $getGroupname, 'name' => "group", 'value' => $user->group_id];
-        return view('Users::users',compact('title','active','uri','inputForm','inputId','inputName','inputEmail','inputPassword','inputPassword_confirmation','inputSelect'));
+        // Form cập nhật thông tin
+        $inputFormInfo = [
+             'action' => 'admin.users.update-info',       
+             'value' => 'Cập nhật'             
+        ] ?? '';
+        $inputCancuoc= ['type' => 'text','title' =>'Số căn cước', 'name' => 'cccd'];    
+        $inputPhone= ['type' => 'text','title' =>'Số điện thoại', 'name' => 'phone'];    
+        $inputAddress = ['type' => 'text','title' =>'Địa chỉ', 'name' => 'address'];    
+        return view('Users::users',compact('title','active','uri','inputForm','inputId','inputName','inputEmail','inputPassword','inputPassword_confirmation','inputSelect','inputFormInfo','inputCancuoc','inputPhone','inputAddress'));
     }
 
     /**
@@ -193,6 +202,20 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function updateInfo(Request $request){        
+        $info = [
+            'cccd' => $request->cccd,
+            'phone' => $request->phone,
+            'address' => $request->address
+        ];        
+        $userMeta = new UserMeta();
+        $userMeta->user_id = $request->id;
+        $userMeta->meta_key = 'info';
+        $userMeta->meta_value = serialize($info);
+        $userMeta->save();
+        return redirect()->route('admin.users.index')->with('msg', "Cập nhật hồ thành công");
+    }
     public function update(Request $request)
     {
         $request->validate(
