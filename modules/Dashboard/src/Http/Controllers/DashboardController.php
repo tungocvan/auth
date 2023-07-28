@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $inputDate = ['type' => 'date', 'name' => 'startDay'];
         $inputSelect = ['type' => 'select', 'name' => 'slWork','select' => [['value' => '1','title' => 'Honda'],['value' => '12','title' => 'Toyota'],],'multiple' => true];
         $inputFile = ['type' => 'file', 'name' => 'fileAnh'];
-        $inputChoices = ['type' => 'choices', 'name' => 'choices','select' => [['value' => '1','label' => 'Honda'],['value' => '12','label' => 'Toyota']]];
+        $inputChoices = ['type' => 'choices', 'name' => 'choices','select' => [['value' => 'Honda','label' => 'Honda'],['value' => 'Toyota','label' => 'Toyota']]];
         
         $menuItems = array(
             array(
@@ -92,8 +92,12 @@ class DashboardController extends Controller
                 'parent' => 2
             ),
         );
+
+        $inputForm = [
+            'action' => 'admin.dashboard.submit',                    
+        ];
         
-        return view('Dashboard::dashboard',compact('title','active','uri','inputUsername','inputEmail','inputDate','inputSelect','inputFile','menuItems','inputChoices'));
+        return view('Dashboard::dashboard',compact('title','active','uri','inputUsername','inputEmail','inputDate','inputSelect','inputFile','menuItems','inputChoices','inputForm'));
     }
 
     /**
@@ -104,6 +108,11 @@ class DashboardController extends Controller
     public function create()
     {
         return view('Dashboard::dashboard');
+    }
+
+    public function submit(Request  $request)
+    {
+        dd($request);
     }
 
     /**

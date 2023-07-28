@@ -77,10 +77,28 @@ class UsersController extends Controller
      */
     public function create()
     {
+        $getGroupname = [];
+        if(count(getGroupAll()) > 0 ){
+            foreach (getGroupAll() as $item) {
+                array_push($getGroupname,[
+                    'value' => $item->id,
+                    'title' => $item->name
+                ]);
+            }
+        }
         $title = "Thêm mới thành viên";
         $active = 'users.create';
         $uri = 'add';        
-        return view('Users::users',compact('title','active','uri'));
+        $inputForm = [
+            'action' => 'admin.users.store',       
+             'value' => 'Cập nhật'             
+        ];
+        $inputName= ['type' => 'text','title' =>'Họ và tên', 'name' => 'name'];
+        $inputEmail= ['type' => 'email','title' =>'Email address', 'name' => 'email'];
+        $inputPassword= ['type' => 'password','title' =>'Mật khẩu', 'name' => 'password'];
+        $inputPassword_confirmation= ['type' => 'password','title' =>'Nhập lại Mật khẩu', 'name' => 'password_confirmation'];
+        $inputSelect = ['type' => 'select', 'name' => 'slWork','select' => $getGroupname, 'name' => "group"];
+        return view('Users::users',compact('title','active','uri','inputForm','inputName','inputEmail','inputPassword','inputPassword_confirmation','inputSelect'));
     }
 
     /**
@@ -142,11 +160,30 @@ class UsersController extends Controller
     public function edit(Users $user)
     {
         //dd($user);
+        $getGroupname = [];
+        if(count(getGroupAll()) > 0 ){
+            foreach (getGroupAll() as $item) {
+                array_push($getGroupname,[
+                    'value' => $item->id,
+                    'title' => $item->name
+                ]);
+            }
+        }
         $title = "Sửathành viên";
         $active = 'users.edit';
         $uri = 'edit'; 
         
-        return view('Users::users',compact('title','active','uri','user'));
+        $inputForm = [
+            'action' => 'admin.users.update',       
+             'value' => 'Cập nhật'             
+        ] ?? '';
+        $inputId= ['type' => 'text','name' => 'id', 'value' => $user->id, 'hidden' => true];        
+        $inputName= ['type' => 'text','title' =>'Họ và tên', 'name' => 'name', 'value' => $user->name];        
+        $inputEmail= ['type' => 'email','title' =>'Email address', 'name' => 'email', 'value' => $user->email];
+        $inputPassword= ['type' => 'password','title' =>'Mật khẩu', 'name' => 'password', 'value' => $user->password];
+        $inputPassword_confirmation= ['type' => 'password','title' =>'Nhập lại Mật khẩu', 'name' => 'password_confirmation', 'value' => $user->password];
+        $inputSelect = ['type' => 'select', 'name' => 'slWork','select' => $getGroupname, 'name' => "group", 'value' => $user->group_id];
+        return view('Users::users',compact('title','active','uri','inputForm','inputId','inputName','inputEmail','inputPassword','inputPassword_confirmation','inputSelect'));
     }
 
     /**

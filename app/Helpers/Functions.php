@@ -161,20 +161,35 @@ function checkPermissions($user,$moduleName,$role)
         
     return false;
 }
-function getCategories($categories, $parentId = 0, $char = '',$inputName = 'category')
+function getCategories($option)
 {   
-
-    //menu:  @php echo getCategories($menuItems); @endphp 
-    //category:  @php echo getCategories($menuItems,0,'','category'); @endphp 
-    if ($categories) {        
-        if($inputName !== null) {
-            $inputName = '<input type="checkbox" name='. $inputName.'[] /> ';
-        }
+    //@php echo getCategories(['categories' => $menuItems]); @endphp
+    //@php echo getCategories(['categories' => $menuItems,'checkedArr' => [10,8,6]]); @endphp
+    $categories = $option['categories'];
+    $parentId = $option['parentId'] ?? 0;
+    $char = $option['char'] ?? '';
+    $inputName = $option['inputName'] ?? 'category';
+    $checkedArr = $option['checkedArr'] ?? null;
+    if ($categories) {              
         foreach ($categories as $key => $category) {
+            if($checkedArr){
+                $checked = '';
+                if(in_array($category['id'],$checkedArr)){
+                    $checked = 'checked';
+                }
+                $inputName2 = "<input ".$checked."  value=".$category['id']." type='checkbox' name=".$inputName."[]  /> ";
+            }else{
+                $inputName2 = '<input  value='.$category['id'].' type="checkbox" name='. $inputName.'[]  /> ';            
+            }            
             if ($category['parent'] == $parentId) {
-                echo "<p>" . $char . $inputName .$category['name'] . "</p>";
-                unset($categories[$key]);
-                getCategories($categories, $category['id'], $char . "ㅤㅤ");
+                echo "<p>" . $char . $inputName2 .$category['name']."</p>";
+                unset($categories[$key]);                    
+                getCategories([
+                    'categories' => $categories,
+                    'parentId' => $category['id'],
+                    'char' => $char . "ㅤㅤ",
+                    'checkedArr' => $checkedArr
+                ]);                
             }
         }
     }

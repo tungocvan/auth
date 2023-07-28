@@ -2,8 +2,7 @@
      $name = $options['name'] ?? 'name';
      $title = $options['title'] ?? '' ;
      $placeholder = $options['placeholder'] ?? $title ;
-     $type = $options['type'] ?? 'text';   
-     $value = $options['value'] ?? 'submit';      
+     $type = $options['type'] ?? 'text';             
      $checked = $options['checked'] ?? '';
      $disabled = $options['disabled'] ?? '';
      $valueInput = $options['value'] ?? '';
@@ -12,8 +11,11 @@
      // https://flatpickr.js.org/examples/
 @endphp
 <div class="mb-2" style="padding: 5px">
-    @switch($type)
+    @switch($type)     
         @case('submit')
+            @php
+                $value = $options['value'] ?? 'submit'; 
+            @endphp
             <input class="btn btn-primary me-1 mb-1" type="submit" name="{{ $name }}" value="{{$value}}" />   
             @break
         @case('date')    
@@ -62,46 +64,49 @@
                 $selectArray =$options['select'] ?? [['value' => '1','title' => 'One'],['value' => '2','title' => 'Two']];
                 $selected = $options['selected'] ?? 'Open this select menu';
                 $multiple = $options['multiple'] ?? '';
+                $value = $options['value'] ?? old($name) ?? ''; 
             @endphp
             @if ($title !=='')
                  <label class="form-label" for="{{ $name }}">{{ $title }}</label>
             @endif
-            <select class="form-select" aria-label="Default select" name="{{ $name }}[]" {{ $multiple?'multiple':'' }} >
-                @if ($selected =='Open this select menu')
-                    <option selected>Open this select menu</option>
-                @endif
+            <select class="form-select" aria-label="Default select" name="{{ $name }}" {{ $multiple?'multiple':'' }} >
+              <option selected>{{ $selected }}</option>
               @foreach ($selectArray as $item)
-                <option {{ $item['value'] ==  $selected?'selected':'' }} value="{{$item['value']}}">{{$item['title']}}</option>
+                <option {{ $item['value'] ==  $value ?'selected':'' }} value="{{$item['value']}}">{{$item['title']}}</option>
               @endforeach
             </select>
             @break     
         @case('choices')   
             @php
-                $choicesArray =$options['select'] ?? [['value' => '1','label' => 'One'],['value' => '2','label' => 'Two']];              
-                
+                $choicesArray =$options['select'] ?? [['value' => '1','label' => 'One'],['value' => '2','label' => 'Two']];    
+                $choicesScript="<script>
+                    const element = document.querySelector('.$name');
+                    const choices = new Choices(element,{
+                    removeItemButton: true, 
+                    })
+                </script>";
             @endphp
             @if ($title !=='')
                  <label class="form-label" for="{{ $name }}">{{ $title }}</label>
             @endif            
-            <select class="form-select js-choice" id="{{ $name }}" name="{{ $name }}[]" data-choices="data-choices" multiple="multiple" >
+            <select class="form-select {{ $name }}" id="{{ $name }}" name="{{ $name }}[]" data-choices="data-choices" multiple="multiple" >
                 @foreach ($choicesArray as $item)
                         <option value="{{$item['value']}}">{{$item['label']}}</option>
                 @endforeach
             </select>
-            <script>
-                const element = document.querySelector('.js-choice');
-                const choices = new Choices(element,{
-                    removeItemButton: true, 
-                });
-            </script>
+            {!! $choicesScript !!}
         @break
         @default
+            @php
+                $value = $options['value'] ?? old($name) ?? ''; 
+                $hidden = $options['hidden'] ?? '';
+            @endphp
             @if ($title !=='')
                  <label class="form-label" for="{{ $name }}">{{ $title }}</label>
             @endif            
-            <input class="form-control @error($name) is-invalid @enderror" id="{{ $name }}" type="{{$type}}" name="{{ $name }}" value="{{ old($name) }}" placeholder="{{ $placeholder }}">        
+            <input {{ $hidden == true?'hidden':'' }} class="form-control @error($name) is-invalid @enderror" id="{{ $name }}" type="{{$type}}" name="{{ $name }}" value="{{ $value ?? old($name) }}" placeholder="{{ $placeholder }}">        
             @error($name)
-                <span class="invalid-feedback" role="alert">
+                <span class="text-danger" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror    
