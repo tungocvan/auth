@@ -35,61 +35,61 @@ class DashboardController extends Controller
                 'name' => 'Home',
                 'url' => 'index.php',
                 'id' => 1,
-                'parent' => null
+                'parent_id' => 0
             ),
             array(
                 'name' => 'About',
                 'url' => 'about.php',
                 'id' => 2,
-                'parent' => null
+                'parent_id' => 0
             ),
             array(
                 'name' => 'Products',
                 'url' => 'products.php',
                 'id' => 3,
-                'parent' => null
+                'parent_id' => 0
             ),
             array(
                 'name' => 'Contact Us',
                 'url' => 'contact.php',
                 'id' => 4,
-                'parent' => null
+                'parent_id' => 0
             ),
             array(
                 'name' => 'Category 1',
                 'url' => 'category1.php',
                 'id' => 5,
-                'parent' => 3
+                'parent_id' => 3
             ),
             array(
                 'name' => 'Category 2',
                 'url' => 'category2.php',
                 'id' => 6,
-                'parent' => 3
+                'parent_id' => 3
             ),
             array(
                 'name' => 'Subcategory 1',
                 'url' => 'subcategory1.php',
                 'id' => 7,
-                'parent' => 5
+                'parent_id' => 5
             ),
             array(
                 'name' => 'Subcategory 2',
                 'url' => 'subcategory2.php',
                 'id' => 8,
-                'parent' => 5
+                'parent_id' => 5
             ),
             array(
                 'name' => 'Category 1',
                 'url' => 'category1.php',
                 'id' => 9,
-                'parent' => 2
+                'parent_id' => 2
             ),
             array(
                 'name' => 'Category 2',
                 'url' => 'category2.php',
                 'id' => 10,
-                'parent' => 2
+                'parent_id' => 2
             ),
         );
 
@@ -111,6 +111,10 @@ class DashboardController extends Controller
     }
 
     public function submit(Request  $request)
+    {
+        dd($request);
+    }
+    public function addCategory(Request  $request)
     {
         dd($request);
     }

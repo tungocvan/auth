@@ -184,15 +184,45 @@ class UsersController extends Controller
         $inputPassword= ['type' => 'password','title' =>'Mật khẩu', 'name' => 'password', 'value' => $user->password];
         $inputPassword_confirmation= ['type' => 'password','title' =>'Nhập lại Mật khẩu', 'name' => 'password_confirmation', 'value' => $user->password];
         $inputSelect = ['type' => 'select', 'name' => 'slWork','select' => $getGroupname, 'name' => "group", 'value' => $user->group_id];
+        
+        $optionsForm =[
+            'inputForm' => $inputForm,
+            'inputId' => $inputId,
+            'inputName' => $inputName,
+            'inputEmail' => $inputEmail,
+            'inputPassword' => $inputPassword,
+            'inputPassword_confirmation' => $inputPassword_confirmation,
+            'inputSelect' => $inputSelect,
+        ];
+
         // Form cập nhật thông tin
+        $infoData = UserMeta::where('user_id','=',$user->id)->where('meta_key','=','info')->get();
+        if(count($infoData) > 0){
+            $info = unserialize($infoData[0]->meta_value);
+        }
+        
         $inputFormInfo = [
              'action' => 'admin.users.update-info',       
              'value' => 'Cập nhật'             
         ] ?? '';
-        $inputCancuoc= ['type' => 'text','title' =>'Số căn cước', 'name' => 'cccd'];    
-        $inputPhone= ['type' => 'text','title' =>'Số điện thoại', 'name' => 'phone'];    
-        $inputAddress = ['type' => 'text','title' =>'Địa chỉ', 'name' => 'address'];    
-        return view('Users::users',compact('title','active','uri','inputForm','inputId','inputName','inputEmail','inputPassword','inputPassword_confirmation','inputSelect','inputFormInfo','inputCancuoc','inputPhone','inputAddress'));
+        $inputCancuoc= ['type' => 'text','title' =>'Số căn cước', 'name' => 'cccd', 'value' => $info['cccd']?? ''];    
+        $inputPhone= ['type' => 'text','title' =>'Số điện thoại', 'name' => 'phone', 'value' => $info['phone']?? ''];    
+        $inputAddress = ['type' => 'text','title' =>'Địa chỉ', 'name' => 'address', 'value' => $info['address']?? ''];    
+        
+        $optionsFormInfo =[
+            'inputFormInfo' => $inputFormInfo,
+            'inputId' => $inputId,
+            'inputCancuoc' => $inputCancuoc,          
+            'inputPhone' => $inputPhone,          
+            'inputAddress' => $inputAddress,          
+        ];
+
+        $optionsTabs = [
+            'idTabs' => ['tab-home','tab-profile'],
+            'titleTabs' => ['Sửa thông tin','Cập nhật thông tin'],
+        ];
+
+        return view('Users::users',compact('title','active','uri','optionsTabs','optionsForm','optionsFormInfo'));
     }
 
     /**

@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Providers;
+use App\View\Components\collapse;
+use App\View\Components\tabslot;
+use App\View\Components\tabpanel;
 use App\View\Components\form;
 use App\View\Components\Input;
 use App\View\Components\Editor;
@@ -37,6 +40,9 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
+        Blade::component('package-collapse', collapse::class);
+        Blade::component('package-tabslot', tabslot::class);
+        Blade::component('package-tabpanel', tabpanel::class);
         Blade::component('package-form', form::class);
         Blade::component('package-input', Input::class);
         Blade::component('package-editor', Editor::class);

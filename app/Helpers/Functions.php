@@ -166,7 +166,7 @@ function getCategories($option)
     //@php echo getCategories(['categories' => $menuItems]); @endphp
     //@php echo getCategories(['categories' => $menuItems,'checkedArr' => [10,8,6]]); @endphp
     $categories = $option['categories'];
-    $parentId = $option['parentId'] ?? 0;
+    $parentId = $option['parent_id'] ?? 0;
     $char = $option['char'] ?? '';
     $inputName = $option['inputName'] ?? 'category';
     $checkedArr = $option['checkedArr'] ?? null;
@@ -181,12 +181,12 @@ function getCategories($option)
             }else{
                 $inputName2 = '<input  value='.$category['id'].' type="checkbox" name='. $inputName.'[]  /> ';            
             }            
-            if ($category['parent'] == $parentId) {
-                echo "<p>" . $char . $inputName2 .$category['name']."</p>";
+            if ($category['parent_id'] == $parentId) {
+                echo "<p style='margin-bottom:8px'>" . $char . $inputName2 .$category['name']."</p>";
                 unset($categories[$key]);                    
                 getCategories([
                     'categories' => $categories,
-                    'parentId' => $category['id'],
+                    'parent_id' => $category['id'],
                     'char' => $char . "ㅤㅤ",
                     'checkedArr' => $checkedArr
                 ]);                
@@ -198,7 +198,7 @@ function getCategoriesOptions($categories, $parentId = 0, $char = '')
 {
     if ($categories) {       
         foreach ($categories as $key => $category) {
-            if ($category['parent'] == $parentId) {
+            if ($category['parent_id'] == $parentId) {
                 echo '<option value=' . $category['id'] . '>' . $char . $category['name']. '</option>';
                 unset($categories[$key]);
                 getCategoriesOptions($categories, $category['id'], $char . "ㅤㅤ");
@@ -207,4 +207,60 @@ function getCategoriesOptions($categories, $parentId = 0, $char = '')
     }
 }
 
-    
+function getCategoriesSingle($option)
+{   
+    //@php echo getCategories(['categories' => $menuItems]); @endphp
+    //@php echo getCategories(['categories' => $menuItems,'checkedArr' => [10,8,6]]); @endphp
+    $categories = $option['categories'];
+    $parentId = $option['parent_id'] ?? 0;
+    $char = $option['char'] ?? '';        
+    if ($categories) {                   
+        foreach ($categories as $key => $category) {
+                   
+            if ($category['parent_id'] == $parentId) {
+                //echo "<p style='margin-bottom:8px'>" . $char .$category['name']."</p>";
+                echo '<option value=' . $category['id'] . '>' . $char . $category['name']. '</option>';
+                unset($categories[$key]);                    
+                getCategoriesSingle([
+                    'categories' => $categories,
+                    'parent_id' => $category['id'],
+                    'char' => $char . "ㅤㅤ",                    
+                ]);                
+            }
+        }
+    }
+}
+
+function has_child($data,$id){
+    foreach ($data as $v) {
+        if($v['parent_id'] == $id){
+            return true;
+        }
+    }
+    return false;
+}
+function render_menu($options){
+
+    $data = $options['data'] ?? [];
+    $parent_id = $options['parent_id'] ?? 0;
+    $level = $options['level'] ?? 0;
+    $idMenu = $options['id'] ?? 'main_menu';
+    $classMenu = $options['class'] ?? '';
+    if($classMenu !== '') $classMenu="class='$classMenu'";
+    if($level == 0) $result = "<ul id='$idMenu' $classMenu  >";
+    else $result = "<ul id='sub-menu'>";
+
+    foreach ($data as $key => $v) {
+        if($v['parent_id'] == $parent_id){            
+            $result .= "<li>";
+            $result .= "<a href='{$v['url']}'>{$v['name']}</a>";
+            if(has_child($data,$v['id'])){
+                unset($data[$key]); 
+                $result .= render_menu(['data' => $data,'parent_id' => $v['id'],'level' => $level+1]);
+            }
+            $result .= "</li>";
+        }
+    }
+    $result .= "</ul>";
+    return $result;
+}
