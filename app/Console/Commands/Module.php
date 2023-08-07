@@ -14,7 +14,7 @@ class Module extends Command
      *
      * @var string
      */
-    protected $signature = 'make:module {name}';
+    protected $signature = 'make:module {name} {--api}';
 
     /**
      * The console command description.
@@ -26,7 +26,7 @@ class Module extends Command
     /**
      * Create a new command instance.
      *
-     * @return void
+     * @return void 
      */
     public function __construct()
     {
@@ -41,6 +41,7 @@ class Module extends Command
     public function handle()
     {
         $name = ucfirst($this->argument('name'));
+        $api = $this->option('api');
         if (File::exists(base_path('modules/' . $name))) {
             $this->error('Module da ton tai');
         } else {
@@ -77,10 +78,14 @@ class Module extends Command
                 if (!File::exists($routesFile)) {
                     $routeName = strtolower($name);
                     $content = "<?php \n use Illuminate\Support\Facades\Route;";
-                    $content .= "\n use Modules\\{$name}\\src\Http\Controllers\\{$name}Controller;";
-                    $content .= "\n Route::middleware(['web','{$routeName}.middleware'])->prefix('/{$routeName}')->group(function(){";
-                    $content .= "\n     Route::get('/', [{$name}Controller::class, 'index']);\n });";
-
+                    if ($api){
+                        $content .= "\n use Modules\\{$name}\\src\Http\Controllers\\api\\{$name}Controller;";
+                        $content .= "\n Route::middleware(['api','{$routeName}.middleware'])->prefix('/api/{$routeName}')->name('api.{$routeName}.')->group(function(){";
+                    }else{
+                        $content .= "\n use Modules\\{$name}\\src\Http\Controllers\\{$name}Controller;";    
+                        $content .= "\n Route::middleware(['web','{$routeName}.middleware'])->prefix('/{$routeName}')->name('{$routeName}.')->group(function(){";
+                    }
+                    $content .= "\n     Route::get('/', [{$name}Controller::class, 'index'])->name('index');\n });";
                     File::put($routesFile, $content);
                 }
             }
@@ -96,16 +101,22 @@ class Module extends Command
                 $httpFolder = base_path('modules/' . $name . '/src/Http');
                 File::makeDirectory($httpFolder, 0755, true, true);
                 // tạo thư mục controllers trong Http
-                $controllersFolder = base_path('modules/' . $name . '/src/Http/Controllers');
+                $controllersFolder = base_path('modules/' . $name . '/src/Http/Controllers');                
+                if($api){
+                    $controllersFolder=base_path('modules/' . $name . '/src/Http/Controllers/api');                
+                }
+
                 File::makeDirectory($controllersFolder, 0755, true, true);
+
                 Artisan::call('create:controller', [
                     'controller' => $name,
                     'directoryModule' => $name,
                     '--resource' => true,
+                    '--api' => $api
                 ]);
-                $newControllerPath = $controllersFolder . '/' . $name . 'Controller.php';
+                $newControllerPath = $controllersFolder . '/' . $name . 'Controller.php';                               
                 $content = file_get_contents($newControllerPath);
-                $newContent = "use Illuminate\Http\Request;\nuse App\Http\Controllers\Controller;\n";
+                $newContent = "use Illuminate\Http\Request;\nuse App\Http\Controllers\Controller;\n";               
                 $newContent .= "use Modules\\$name\src\Models\\$name;";
                 $content = str_replace('use Illuminate\Http\Request;', $newContent, $content);
                 file_put_contents($newControllerPath, $content);

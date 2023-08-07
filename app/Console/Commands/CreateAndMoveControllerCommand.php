@@ -8,18 +8,24 @@ use Illuminate\Support\Facades\File;
 
 class CreateAndMoveControllerCommand extends Command
 {
-    protected $signature = 'create:controller {controller} {directoryModule} {--resource}';
+    protected $signature = 'create:controller {controller} {directoryModule} {--resource} {--api}';
 
     protected $description = 'Create a controller file and move it to a specified directory';
 
     public function handle()
     {
         $controllerName = $this->argument('controller') . 'Controller';
-        $nameModule = $this->argument('directoryModule');
-        $directory = "modules/{$nameModule}/src/Http/Controllers";
-        $controllerPath = app_path('Http/Controllers/' . $controllerName . '.php');
-        $newControllerPath = $directory . '/' . $controllerName . '.php';
-        $myoption = $this->option('resource');
+        $nameModule = $this->argument('directoryModule');        
+        $directory = "modules/{$nameModule}/src/Http/Controllers";        
+        $controllerPath = app_path('Http/Controllers/' . $controllerName . '.php'); 
+        $api = $this->option('api');                        
+        
+        if($api) {
+            $directory = "modules/{$nameModule}/src/Http/Controllers/api";            
+        }
+
+        $newControllerPath = $directory . '/' . $controllerName . '.php';        
+        $myoption = $this->option('resource');        
         //dd($myoption);
         if (File::exists($newControllerPath)) {
             $this->error('Controller file already exists in directory');

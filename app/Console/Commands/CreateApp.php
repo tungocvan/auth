@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Artisan;
 class CreateApp extends Command
 {
     protected $signature = 'create:app {name}';
-
     protected $description = 'Create a new App for policy';
-
     public function handle()
     {
          $name = $this->argument('name'); 
