@@ -5,6 +5,7 @@ use App\Imports\ThuocImport;
 use App\Imports\ProductsImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Groups\src\Models\Groups;
+use Illuminate\Support\Facades\Mail;
 
 function isDoctorActive($email)
 {
@@ -263,4 +264,17 @@ function render_menu($options){
     }
     $result .= "</ul>";
     return $result;
+}
+
+function send_mail($options){    
+    $to = $options['to'] ?? 'tungocvan@gmail.com';    
+    $cc = $options['cc'] ?? '';    
+    $content  = $options['content'] ?? '<h3>This is test mail<h3>';
+    $subject = $options['subject'] ?? 'Email send from HAMADA';
+    Mail::send([], [], function ($message) use ($to,$cc,$content, $subject) {
+        $message->to($to);
+        $cc && $message->cc($cc);
+        $message->subject($subject);
+        $message->setBody($content, 'text/html');
+    });
 }
